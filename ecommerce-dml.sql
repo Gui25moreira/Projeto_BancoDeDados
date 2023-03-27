@@ -102,3 +102,18 @@ values (2,1,1267),
 (1,4,836),
 (1,3,153),
 (1,5,132);
+
+--remoção de 1 cliente que não possua pedidos ou items no carrinho 
+insert into endereco (cep,uf,cidade,logradouro,numero)
+values ('45650820','BA','Ilhéus','Travessa Santa Clara','64');
+
+insert into cliente (nome,cpf,id_endereco)
+values ('Breno Gabriel Henry Aragão','57535194230',10);
+
+delete from cliente c where c.cpf = '57535194230';
+
+--atualização da descrição e valor de um produto
+update produto p
+set descricao = 'Protetor Solar e Bronzeador Corporal Bifásico ISDIN HydroOil FPS 30 - 200ml',
+valor = 51.28
+where p.codigo_barra = '9804945129510549';
