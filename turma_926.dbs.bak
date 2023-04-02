@@ -75,6 +75,29 @@
 				<column name="id" />
 			</index>
 		</table>
+		<table name="estoque" prior="tbl_0" >
+			<column name="id_produto" type="serial" jt="4" mandatory="y" />
+			<column name="id_endereco" type="serial" jt="4" mandatory="y" />
+			<column name="quantidade" type="integer" jt="4" mandatory="y" />
+			<index name="pk_estoqueq" unique="PRIMARY_KEY" >
+				<column name="id_produto" />
+				<column name="id_endereco" />
+			</index>
+			<fk name="id_produto" to_schema="ecommerce-turma-926" to_table="produto" >
+				<fk_column name="id_produto" pk="id" />
+			</fk>
+			<fk name="id_endereco" to_schema="ecommerce-turma-926" to_table="endereco" >
+				<fk_column name="id_endereco" pk="id" />
+			</fk>
+		</table>
+		<table name="fk_id_endereco" prior="estoque" >
+			<column name="id_produto" type="serial" jt="4" mandatory="y" />
+			<column name="id_endereco" type="serial" jt="4" mandatory="y" />
+			<index name="pk_estoque" unique="PRIMARY_KEY" >
+				<column name="id_produto" />
+				<column name="id_endereco" />
+			</index>
+		</table>
 		<table name="fk_id_pedido" prior="pedido_cupom" >
 			<column name="id_cupom" type="serial" jt="4" mandatory="y" />
 			<column name="id_pedido" type="integer" jt="4" mandatory="y" />
@@ -123,15 +146,19 @@
 			<column name="meio_pagamento" type="varchar" length="200" jt="12" mandatory="y" />
 			<column name="status" type="varchar" length="100" jt="12" mandatory="y" />
 			<column name="id_cliente" type="integer" jt="4" mandatory="y" />
-			<column name="data_criacao" type="timestamp" jt="93" mandatory="y" >
+			<column name="data_pedido" prior="data_criacao" type="timestamp" jt="93" mandatory="y" >
 				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
 			</column>
-			<column name="cod_cupom" type="varchar" length="20" jt="12" />
+			<column name="id_cupom" prior="cod_cupom" type="varchar" length="20" jt="12" mandatory="y" />
+			<column name="data_entrega" type="date" jt="91" mandatory="y" />
 			<index name="pk_pedido" unique="PRIMARY_KEY" >
 				<column name="id" />
 			</index>
 			<fk name="fk_pedido_cliente" to_schema="ecommerce-turma-926" to_table="cliente" >
 				<fk_column name="id_cliente" pk="id" />
+			</fk>
+			<fk name="fk_cupom" to_schema="ecommerce-turma-926" to_table="cupom" >
+				<fk_column name="id_cupom" pk="id" />
 			</fk>
 		</table>
 		<table name="produto" prior="tbl_0" >
@@ -163,17 +190,17 @@
 		<table name="tbl" />
 	</schema>
 	<layout name="Default Layout" id="Layout-14d3" show_column_type="y" show_relation="columns" >
-		<entity schema="ecommerce-turma-926" name="carrinho" color="C1D8EE" x="320" y="400" />
-		<entity schema="ecommerce-turma-926" name="carrinho_produto" color="C1D8EE" x="320" y="560" />
+		<entity schema="ecommerce-turma-926" name="carrinho" color="C1D8EE" x="288" y="336" />
+		<entity schema="ecommerce-turma-926" name="carrinho_produto" color="C1D8EE" x="304" y="512" />
 		<entity schema="ecommerce-turma-926" name="cliente" color="C1D8EE" x="64" y="208" />
-		<entity schema="ecommerce-turma-926" name="cupom" color="C1D8EE" x="800" y="208" />
-		<entity schema="ecommerce-turma-926" name="endereco" color="C1D8EE" x="80" y="512" />
-		<entity schema="ecommerce-turma-926" name="fk_id_pedido" color="C1D8EE" x="896" y="416" />
+		<entity schema="ecommerce-turma-926" name="cupom" color="C1D8EE" x="832" y="208" />
+		<entity schema="ecommerce-turma-926" name="endereco" color="C1D8EE" x="48" y="512" />
+		<entity schema="ecommerce-turma-926" name="estoque" color="C1D8EE" x="304" y="640" />
 		<entity schema="ecommerce-turma-926" name="fornecedor" color="C1D8EE" x="96" y="768" />
 		<entity schema="ecommerce-turma-926" name="item_pedido" color="C1D8EE" x="576" y="448" />
 		<entity schema="ecommerce-turma-926" name="pedido" color="C1D8EE" x="480" y="208" />
 		<entity schema="ecommerce-turma-926" name="produto" color="C1D8EE" x="544" y="624" />
-		<entity schema="ecommerce-turma-926" name="produto_fornecedor" color="C1D8EE" x="464" y="784" />
+		<entity schema="ecommerce-turma-926" name="produto_fornecedor" color="C1D8EE" x="464" y="816" />
 		<callout x="48" y="48" pointer="Round" >
 			<comment><![CDATA[This is a layout - a diagram with tools.
 - Right-click the layout to create new tables. 
